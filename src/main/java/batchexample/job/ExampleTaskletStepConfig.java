@@ -17,16 +17,16 @@ public class ExampleTaskletStepConfig {
     @Bean
     public Step exampleTasklet1Step() {
         return stepBuilder.get("exampleTasklet1")
-                .tasklet(exampleTasklet1)
                 .listener(new StepResultListener())
+                .tasklet(exampleTasklet1)
                 .build();
     }
 
     @Bean
     public Step exampleTasklet2Step() {
         return stepBuilder.get("exampleTasklet2")
-                .tasklet(exampleTasklet2)
                 .listener(new StepResultListener())
+                .tasklet(exampleTasklet2)
                 .build();
     }
 }

@@ -18,9 +18,3 @@ spring:
       enabled: false
     jdbc:
       initialize-schema: always
-    job-store-type: memory
-    properties:
-      org:
-        quartz:
-          threadPool:
-            threadCount: 5
