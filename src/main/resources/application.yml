@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    hikari:
+      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      jdbc-url: jdbc:sqlserver://172.21.10.100:1433;DatabaseName=scheduler
+      username: sa
+      password: upitec
+      minimum-idle: 5
+      maximum-pool-size: 50
+      connection-timeout: 100000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      cachePrepStmts: true
+      prepStmtCacheSize: 250
+      prepStmtCacheSqlLimit: 2048
+  batch:
+    job:
+      enabled: false
+    jdbc:
+      initialize-schema: always
+  quartz:
+    jdbc:
+      initialize-schema: always
+    job-store-type: memory
+    properties:
+      org:
+        quartz:
+          threadPool:
+            threadCount: 5
