@@ -14,6 +14,6 @@ public class StepResultListener implements StepExecutionListener {
     @Override
     public ExitStatus afterStep(StepExecution stepExecution) {
         log.info("afterStep was called with stepName:{} and exitStatus:{}", stepExecution.getStepName(), stepExecution.getExitStatus());
-        return null;
+        return ExitStatus.COMPLETED;
     }
 }
