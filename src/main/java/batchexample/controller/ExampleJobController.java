@@ -28,8 +28,11 @@ public class ExampleJobController {
     @SneakyThrows
     @PostMapping("/job")
     public ResponseEntity<String> job(@RequestBody ExampleRequestDto requestDto) {
-
-        JobExecution run = jobLauncher.run(exampleJob, dtoToJobParameters(requestDto));
+        JobExecution run = null;
+        if (exampleJob.getName().equals(requestDto.getJobName())) {
+            run = jobLauncher.run(exampleJob, dtoToJobParameters(requestDto));
+        }
+        assert run != null;
         return new ResponseEntity<>("Job was executed with exitCode " + run.getExitStatus().getExitCode(), HttpStatus.OK);
     }
 
