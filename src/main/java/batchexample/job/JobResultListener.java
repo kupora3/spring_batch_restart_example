@@ -13,14 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Slf4j
 public class JobResultListener implements JobExecutionListener {
-    @Autowired
-    private JobLauncher jobLauncher;
-    @Autowired
-    private JobRepository jobRepository;
-    @Autowired
-    private JobExplorer jobExplorer;
-    @Autowired
-    private JobRegistry jobRegistry;
+//    @Autowired
+//    private JobLauncher jobLauncher;
+//    @Autowired
+//    private JobRepository jobRepository;
+//    @Autowired
+//    private JobExplorer jobExplorer;
+//    @Autowired
+//    private JobRegistry jobRegistry;
 
     @Override
     public void beforeJob(JobExecution jobExecution) {
@@ -29,20 +29,20 @@ public class JobResultListener implements JobExecutionListener {
 
     @Override
     public void afterJob(JobExecution jobExecution) {
-        SimpleJobOperator jobOperator = new SimpleJobOperator();
-        jobOperator.setJobExplorer(jobExplorer);
-        jobOperator.setJobLauncher(jobLauncher);
-        jobOperator.setJobRegistry(jobRegistry);
-        jobOperator.setJobRepository(jobRepository);
-
-        Long executionId = jobExecution.getJobId();
-        if (jobExecution.getStatus().equals(BatchStatus.FAILED)) {
-            try {
-                jobOperator.restart(executionId);
-            } catch (Exception e) {
-                log.error("Error resuming job " + executionId + ", a new job instance will be created. Cause: " + e.getLocalizedMessage());
-            }
-        }
+//        SimpleJobOperator jobOperator = new SimpleJobOperator();
+//        jobOperator.setJobExplorer(jobExplorer);
+//        jobOperator.setJobLauncher(jobLauncher);
+//        jobOperator.setJobRegistry(jobRegistry);
+//        jobOperator.setJobRepository(jobRepository);
+//
+//        Long executionId = jobExecution.getJobId();
+//        if (jobExecution.getStatus().equals(BatchStatus.FAILED)) {
+//            try {
+//                jobOperator.restart(executionId);
+//            } catch (Exception e) {
+//                log.error("Error resuming job " + executionId + ", a new job instance will be created. Cause: " + e.getLocalizedMessage());
+//            }
+//        }
         log.info("Job was completed with exitCode:{}", jobExecution.getExitStatus().getExitCode());
     }
 }

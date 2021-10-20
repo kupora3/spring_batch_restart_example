@@ -14,6 +14,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 @Slf4j
 public class StepResultListener implements StepExecutionListener {
+    @Autowired
+    private JobLauncher jobLauncher;
+    @Autowired
+    private JobRepository jobRepository;
+    @Autowired
+    private JobExplorer jobExplorer;
+    @Autowired
+    private JobRegistry jobRegistry;
+
+    public StepResultListener() {
+    }
 
     @Override
     public void beforeStep(StepExecution stepExecution) {
@@ -22,6 +33,19 @@ public class StepResultListener implements StepExecutionListener {
 
     @Override
     public ExitStatus afterStep(StepExecution stepExecution) {
+        SimpleJobOperator jobOperator = new SimpleJobOperator();
+        jobOperator.setJobExplorer(jobExplorer);
+        jobOperator.setJobLauncher(jobLauncher);
+        jobOperator.setJobRegistry(jobRegistry);
+        jobOperator.setJobRepository(jobRepository);
+        Long executionId = stepExecution.getJobExecution().getJobId();
+        if (stepExecution.getStatus().equals(BatchStatus.FAILED)) {
+            try {
+                jobOperator.restart(executionId);
+            } catch (Exception e) {
+                log.error("Error resuming job " + executionId + ", a new job instance will be created. Cause: " + e.getLocalizedMessage());
+            }
+        }
         log.info("afterStep was called with stepName:{} and exitStatus:{}", stepExecution.getStepName(), stepExecution.getExitStatus());
         return ExitStatus.COMPLETED;
     }
