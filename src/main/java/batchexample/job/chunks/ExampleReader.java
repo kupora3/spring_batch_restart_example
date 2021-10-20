@@ -7,12 +7,15 @@ import org.springframework.batch.item.ParseException;
 import org.springframework.batch.item.UnexpectedInputException;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
 @Component
 public class ExampleReader implements ItemReader<String> {
-    private List<String> example = List.of("Hello", "World");
+    private List<String> example = new ArrayList<>(List.of("Hello", "World"));
 
     @Override
     public String read() throws Exception, UnexpectedInputException, ParseException, NonTransientResourceException {

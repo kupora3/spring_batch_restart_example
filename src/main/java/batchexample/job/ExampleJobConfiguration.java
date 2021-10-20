@@ -18,6 +18,7 @@ public class ExampleJobConfiguration {
     @Bean
     public Job exampleJob() {
         return jobBuilderFactory.get("exampleJob")
+                .listener(new JobResultListener())
                 .start(exampleTasklet1Step)
                 .next(exampleTasklet2Step)
                 .next(exampleChunkStep)
